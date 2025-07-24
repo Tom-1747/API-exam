@@ -1,0 +1,34 @@
+{
+    "taches": [{
+            "id": 1,
+            "description": "Faire les courses"
+        },
+
+        {
+            "id": 2, 
+            "description": "Apprendre l'API"
+        },
+
+        {
+            "id": 3,
+            "description": "Netoyer la maison"
+        },
+
+        {
+            "id": 4,
+            "description": "Faire le challenge WEB2"
+        },
+
+        {
+            "id": 5,
+            "description": "Terminer un lab sur tryhackme"
+        },
+
+        {
+            "id": 6,
+            "description": "Faire au moins 2 kata sur codewars"
+        }
+    
+
+    ]
+}
