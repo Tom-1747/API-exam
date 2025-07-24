@@ -5,21 +5,8 @@ import json
 import os
 
 
-DATA_FILE = "taches.json"
-
-def read_tasks() -> Dict[int, dict]:
-    if not os.path.exists(DATA_FILE):
-        return {}
-    with open(DATA_FILE, "r", encoding="utf-8") as f:
-        try:
-            taches_list = json.load(f)
-            return {i + 1: t for i, t in enumerate(taches_list)}
-        except json.JSONDecodeError:
-            return {}
-
-def write_tasks(task_dict: Dict[int, dict]):
-    with open(DATA_FILE, "w", encoding="utf-8") as f:
-        json.dump(list(task_dict.values()), f, indent=4)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_FILE = os.path.join(BASE_DIR, "taches.json")
 
 
 @dataclass
@@ -28,9 +15,24 @@ class Tache:
     description: str
 
 
+def read_tasks() -> Dict[int, dict]:
+    if not os.path.exists(DATA_FILE):
+        return {}
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        try:
+            data = json.load(f)
+            taches_list = data.get("taches", [])
+            return {t["id"]: t for t in taches_list}
+        except json.JSONDecodeError:
+            return {}
+
+def write_tasks(task_dict: Dict[int, dict]):
+    with open(DATA_FILE, "w", encoding="utf-8") as f:
+        json.dump({"taches": list(task_dict.values())}, f, indent=4, ensure_ascii=False)
+
+
 list_taches = read_tasks()
 app = FastAPI()
-
 
 @app.get("/total_tasks")
 def get_total_tasks():
